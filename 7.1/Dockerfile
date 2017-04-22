@@ -8,3 +8,6 @@ RUN apt-get autoclean && apt-get update
 RUN apt-get install --no-install-recommends -y software-properties-common python-software-properties
 RUN LC_ALL=C.UTF-8 add-apt-repository -y ppa:ondrej/php
 RUN apt-get update
+
+# Install base packages
+RUN apt-get install -y git curl nano wget vim
