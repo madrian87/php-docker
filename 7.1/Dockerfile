@@ -11,3 +11,8 @@ RUN apt-get update
 
 # Install base packages
 RUN apt-get install -y git curl nano wget vim
+
+RUN apt-get install --no-install-recommends -y \
+    php7.1 php7.1-cli php7.1-mysql php7.1-fpm \
+    php7.1-curl php7.1-intl php7.1-dom php7.1-mbstring php7.1-zip \
+    php7.1-xml php7.1-dev php-pear php7.1-bcmath php7.1-mcrypt php7.1-sqlite
