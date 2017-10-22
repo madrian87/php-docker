@@ -1,6 +1,6 @@
 FROM php:7.1-fpm
 
-LABEL maintainer="Marek Miernik <vincent.composieux@gmail.com>"
+LABEL maintainer="Marek Miernik <miernikmarek@gmail.com>"
 
 ENV ALLOW_OVERRIDE **False**
 ENV TERM xterm
@@ -20,6 +20,13 @@ RUN apt-get install --no-install-recommends -y \
     php7.1-curl php7.1-intl php7.1-dom php7.1-mbstring php7.1-zip \
     php7.1-xml php7.1-dev php-pear php7.1-bcmath php7.1-mcrypt php7.1-sqlite \
     php7.1-tokenizer
+
+RUN mkdir -p /var/log/php
+RUN sed -ie 's/;error_log = syslog/error_log = \/var\/log\/php\/error.log/g' /etc/php/7.1/fpm/php.ini
+RUN sed -ie 's/memory_limit = 128M/memory_limit = 1024M/g' /etc/php/7.1/fpm/php.ini
+
+RUN sed -ie 's/listen = \/run\/php\/php7.1-fpm.sock/listen = 0.0.0.0:9000/g' /etc/php/7.1/fpm/pool.d/www.conf
+RUN service php7.1-fpm reload
 
 # Symfony installer
 RUN curl -LsS https://symfony.com/installer -o /usr/local/bin/symfony
