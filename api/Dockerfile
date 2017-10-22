@@ -24,3 +24,18 @@ RUN apt-get install --no-install-recommends -y \
 # Symfony installer
 RUN curl -LsS https://symfony.com/installer -o /usr/local/bin/symfony
 RUN chmod a+x /usr/local/bin/symfony
+
+# Composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+ENV PATH $PATH:/usr/share/nginx/html/app/vendor/bin
+
+# Phing
+RUN wget http://www.phing.info/get/phing-latest.phar
+RUN mv phing-latest.phar /usr/local/bin/phing
+RUN chmod +x /usr/local/bin/phing
+
+# Running fpm service
+RUN service php7.1-fpm start
+
+CMD ["php-fpm7.1", "-F"]
+EXPOSE 9000
